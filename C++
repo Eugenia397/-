@@ -312,3 +312,41 @@ int main() {
 
     return 0;
 }
+
+
+
+ФИБОННАЧИ ПОИСК
+def fibonacci_search(arr, x):
+    def fib_gen(max_val):  # Генерация чисел Фибоначчи
+        a, b = 0, 1
+        while True:
+            yield a
+            a, b = b, a+b
+            if a > max_val:
+                break
+
+    # Получаем список чисел Фибоначчи вплоть до длины массива
+    fib_numbers = list(fib_gen(len(arr)))
+
+    offset = -1  # Текущая смещение относительно начала массива
+    k = len(fib_numbers) - 1  # Индекс наибольшего числа Фибоначчи меньшего длины массива
+
+    while k > 0 and fib_numbers[k] > 0:
+        i = min(offset + fib_numbers[k], len(arr) - 1)  # Рассчитываем возможную позицию
+
+        if arr[i] < x:  # Если текущий элемент меньше искомого, сдвигаемся дальше
+            offset = i
+            k -= 1
+        elif arr[i] > x:  # Если текущий элемент больше искомого, идём назад
+            k -= 2
+        else:  # Нашли элемент
+            return i
+
+    return -1  # Элемента нет в массиве
+
+
+# Тестирование функции
+arr = [10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100]
+x = 85
+index = fibonacci_search(arr, x)
+print("Индекс:", index)

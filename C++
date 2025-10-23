@@ -128,3 +128,132 @@ int main() {
 }
 
 
+
+БЫСТРАЯ СОРТИРОВКА
+#include <iostream>
+using namespace std;
+
+// Вспомогательная функция для обмена двух элементов массива
+void swap(int& a, int& b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+// Выбор последнего элемента в качестве опорного (pivot),
+// и размещение элементов меньше pivot слева, а больше или равных — справа
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];    // Последний элемент выбран в качестве опорного
+    int i = low - 1;          // Индекс для меньших элементов
+    
+    // Перебор элементов массива от начала до конца
+    for (int j = low; j <= high - 1; j++) {
+        // Если текущий элемент меньше или равен pivot, перемещаем его влево
+        if (arr[j] <= pivot) {
+            i++;              // Увеличение индекса меньших элементов
+            swap(arr[i], arr[j]); // Меняем местами элементы
+        }
+    }
+    
+    // Ставим pivot на своё место
+    swap(arr[i + 1], arr[high]);
+    return (i + 1);           // Возврат индекса места опорного элемента
+}
+
+// Основная рекурсивная функция быстрой сортировки
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        // Получаем индекс после разделения массива
+        int pi = partition(arr, low, high);
+        
+        // Рекурсивно сортируем элементы до и после опорного элемента
+        quickSort(arr, low, pi - 1);   // До опорного элемента
+        quickSort(arr, pi + 1, high);  // После опорного элемента
+    }
+}
+
+// Функция для вывода массива
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+
+// Пример использования
+int main() {
+    int arr[] = {64, 34, 25, 12, 22, 11};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    
+    cout << "Исходный массив: ";
+    printArray(arr, n);
+    
+    quickSort(arr, 0, n - 1);
+    
+    cout << "Отсортированный массив: ";
+    printArray(arr, n);
+    
+    return 0;
+}
+
+
+
+ПИРАМИДАЛЬНАЯ СОРТИРОВКА
+#include <iostream>
+using namespace std;
+
+// Корректирует кучу, делая поддерево с корнем в pos вершиной
+void heapify(int arr[], int n, int pos) {
+    int largest = pos;       // Изначально считаем текущий элемент наибольшим
+    int left = 2 * pos + 1; // Левый ребенок
+    int right = 2 * pos + 2;// Правый ребенок
+
+    // Если левый ребенок существует и больше родителя
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    // Если правый ребенок существует и больше родителя
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    // Если наибольшее значение изменилось, обновляем вершину
+    if (largest != pos) {
+        swap(arr[pos], arr[largest]); // Меняем местами вершины
+        heapify(arr, n, largest);     // Рекурсивно восстанавливаем кучу снизу вверх
+    }
+}
+
+// Основное тело сортировки
+void heapSort(int arr[], int n) {
+    // Строим max-кучу из массива
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);           // Восстанавливаем кучу сверху вниз
+
+    // Извлекаем элементы из кучи по одному
+    for (int i = n - 1; i > 0; i--) {
+        swap(arr[0], arr[i]);         // Максимальный элемент (корень) отправляется в конец
+        heapify(arr, i, 0);           // Восстанавливаем кучу после удаления корня
+    }
+}
+
+// Вывод массива
+void printArray(int arr[], int n) {
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+
+// Тестирование сортировки
+int main() {
+    int arr[] = {64, 34, 25, 12, 22, 11};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "Исходный массив: ";
+    printArray(arr, n);
+
+    heapSort(arr, n);                // Применение пирамидальной сортировки
+
+    cout << "Отсортированный массив: ";
+    printArray(arr, n);
+
+    return 0;
+}

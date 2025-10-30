@@ -261,36 +261,34 @@ def ternary_search(arr, target):
     left, right = 0, len(arr) - 1
     
     while left <= right:
-        # Рассчитываем две трети (разделяем на три части)
-        third_left = left + (right - left) // 3
-        third_right = right - (right - left) // 3
+        # Делим массив на три примерно равные части
+        mid1 = left + (right - left) // 3
+        mid2 = right - (right - left) // 3
         
-        # Проверяем обе трети
-        if arr[third_left] == target:
-            return third_left
-        elif arr[third_right] == target:
-            return third_right
+        # Проверяем средние точки
+        if arr[mid1] == target:
+            return mid1
+        elif arr[mid2] == target:
+            return mid2
         
-        # Сокращаем область поиска
-        if target < arr[third_left]:  # Элемент в первой трети
-            right = third_left - 1
-        elif target > arr[third_right]:  # Элемент в третьей трети
-            left = third_right + 1
-        else:                         # Элемент во второй трети
-            left = third_left + 1
-            right = third_right - 1
+        # Узкая настройка областей поиска
+        if target < arr[mid1]:
+            right = mid1 - 1
+        elif target > arr[mid2]:
+            left = mid2 + 1
+        else:
+            left = mid1 + 1
+            right = mid2 - 1
     
     return -1  # Элемент не найден
 
 РЕЗУЛЬТАТ ВЫПОЛНЕНИЯ КОДА:
-if __name__ == "__main__":
-    test_array = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]
-    target_number = 15
-    result = ternary_search(test_array, target_number)
-    
-    if result != -1:
-        print(f"Элемент {target_number} найден на позиции {result}.")
-    else:
-        print(f"Элемент {target_number} не найден.")
+test_array = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]
+target_value = 15
+result = ternary_search(test_array, target_value)
 
+if result != -1:
+    print(f"Элемент {target_value} найден на позиции {result}.")
+else:
+    print(f"Элемент {target_value} не найден.")
 

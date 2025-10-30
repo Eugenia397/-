@@ -98,21 +98,17 @@ height = sum(row[col] for row in beads_matrix)
 Его основная цель — уменьшить количество сравнений, необходимых для нахождения элемента в отсортированном массиве.
 
 2) Кратко о работе алгоритма:
-1. Определяется размер скачков (step):
-step = int(math.sqrt(length))  
-2. Совершается серия скачков по массиву:
-prev = 0
-    next_jump = min(step, length) # Следующая точка прыжка
-    # Производим скачок вперед по массиву
-    while next_jump < length and arr[next_jump] <= target:
-        prev = next_jump
-        next_jump += step
-3. Производится линейный поиск в найденном сегменте:
-for idx in range(prev, min(next_jump, length)):
-        if arr[idx] == target:
-            return idx
-4. Возврат результата (-1, если элемент не найден):
-return -1  # Если элемент не обнаружен
+1. Делится массив на блоки длины m=n:
+block_size = int(math.sqrt(len(arr)))
+2. Алгоритм прыгает вперёд на m элементов, пока не найдёт элемент, больше или равный искомому:
+prev_block = 0
+while arr[min(block_size, len(arr)-1)] < target:
+    prev_block = block_size
+    block_size += block_size
+3. Если найденный элемент больше искомого, выполняется линейный поиск в предыдущем блоке:
+for i in range(prev_block, min(block_size, len(arr))):
+    if arr[i] == target:
+        return i
 
 3) Описание временной сложности:
 Лучший случай: O(кореньN), где N — длина массива.

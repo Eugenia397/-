@@ -64,16 +64,15 @@ while remaining_length > 1:
 Затем воображаемые нити позволяют бусинам падать вертикально вниз, формируя устойчивые структуры, после чего считывается новый упорядоченный массив.
 
 2) Кратко о работе алгоритма:
-1. Строительство матрицы:
-beads_matrix = [[False]*len(arr) for _ in range(max_height)]
-2. Свободное падение бусинок вниз:
-for row in range(max_height):
-        count_true = sum(beads_matrix[row])
-        beads_matrix[row][:count_true] = [True]*count_true
-        beads_matrix[row][count_true:] = [False]*(len(arr)-count_true)
-3. Подсчитываем количество бусин:
-height = sum(row[col] for row in beads_matrix)
-        result.append(height)
+1. Каждый элемент массива представляется в виде горизонтального ряда бусин, количество которых соответствует его значению:
+beads_matrix = [[value > i for i in range(max_value)] for value in arr]
+2. Бусины располагаются на «стержнях»:
+transposed = list(zip(*beads_matrix))
+3. Под действием «гравитации» бусины падают вниз:
+for column in transposed:
+    column.sort(reverse=True)
+4. После оседания бусин строки считываются сверху вниз — получается отсортированный массив:
+sorted_arr = [sum(row) for row in zip(*transposed)]
 
 3) Описание временной сложности:
 Теоретически и практически временные характеристики зависят от реализаций:

@@ -195,55 +195,42 @@ if __name__ == "__main__":
 ЭКСПОНЕНЦИАЛЬНЫЙ ПОИСК
 def binary_search(arr, left, right, target):
     """
-    Вспомогательная функция для бинарного поиска в заданном диапазоне.
-    :param arr: отсортированный массив
-    :param left: левая граница диапазона
-    :param right: правая граница диапазона
-    :param target: искомое значение
-    :return: индекс искомого элемента или -1, если элемент не найден
+    Вспомогательная функция для бинарного поиска.
     """
     while left <= right:
-        mid = (left + right) // 2  # Индекс средней позиции
+        mid = (left + right) // 2
         if arr[mid] == target:
-            return mid              # Если нашли элемент, возвращаем его индекс
+            return mid
         elif arr[mid] < target:
-            left = mid + 1          # Переходим вправо
+            left = mid + 1
         else:
-            right = mid - 1         # Переходим влево
-    return -1                       # Элемент не найден
+            right = mid - 1
+    return -1
 
 def exponential_search(arr, target):
     """
-    Основная функция для экспоненциального поиска.
-    :param arr: отсортированный массив
-    :param target: искомое значение
-    :return: индекс искомого элемента или -1, если элемент не найден
+    Реализует экспоненциальный поиск в отсортированном массиве.
     """
     if not arr or arr[0] > target:
-        return -1                   # Если массив пуст или первое значение больше искомого
-
-    # Начало экспоненциального поиска
-    bound = 1                      # Текущий индекс
+        return -1  # Если массив пуст или первый элемент больше искомого
+    
+    # Экспоненциальное расширение
+    bound = 1
     while bound < len(arr) and arr[bound] < target:
-        bound *= 2                  # Удваиваем дистанцию (экпоненциальный рост)
-
-    # Установка границ для бинарного поиска
-    left_bound = bound // 2         # Левая граница диапазона
-    right_bound = min(bound, len(arr) - 1)  # Правая граница диапазона
-
-    # Бинарный поиск в ограниченном диапазоне
-    return binary_search(arr, left_bound, right_bound, target)
+        bound *= 2
+    
+    # Бинарный поиск в найденном диапазоне
+    return binary_search(arr, bound//2, min(bound, len(arr)-1), target)
 
 РЕЗУЛЬТАТ ВЫПОЛНЕНИЯ КОДА:
-if __name__ == "__main__":
-    test_array = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]
-    target_number = 15
-    result = exponential_search(test_array, target_number)
-    
-    if result != -1:
-        print(f"Элемент {target_number} найден на позиции {result}.")
-    else:
-        print(f"Элемент {target_number} не найден.")
+arr = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]
+target = 15
+result = exponential_search(arr, target)
+
+if result != -1:
+    print(f"Элемент {target} найден на позиции {result}.")
+else:
+    print(f"Элемент {target} не найден.")
 
 
 

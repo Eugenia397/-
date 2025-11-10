@@ -64,4 +64,16 @@ class BinomialHeap:
 
 
 4) ХЭШ-ТАБЛИЦА
+# Создадим простую хэш-таблицу с тремя элементами
+hash_table = {
+    'apple': 1,
+    'banana': 2,
+    'orange': 3
+}
 
+# Проверяем наличие ключа и выводим значение
+fruit = input('Введите название фрукта: ')
+if fruit in hash_table:
+    print(f'Количество {fruit}:', hash_table[fruit])
+else:
+    print('Такой фрукт не найден.')

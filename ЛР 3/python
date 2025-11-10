@@ -59,6 +59,54 @@ class BinomialHeap:
 
 
 3) КУЧА ФИБОНАЧЧИ
+class FibonacciHeapNode:
+    def __init__(self, key):
+        self.key = key
+        self.parent = None
+        self.child = None
+        self.left = None
+        self.right = None
+        self.degree = 0
+        self.marked = False
+
+class FibonacciHeap:
+    def __init__(self):
+        self.min_node = None
+        self.size = 0
+
+    def insert(self, key):
+        node = FibonacciHeapNode(key)
+        if self.min_node is None:
+            self.min_node = node
+        else:
+            self._add_to_root_list(node)
+            if node.key < self.min_node.key:
+                self.min_node = node
+        self.size += 1
+
+    def _add_to_root_list(self, node):
+        if self.min_node is None:
+            node.left = node.right = node
+            self.min_node = node
+        else:
+            node.right = self.min_node.right
+            node.left = self.min_node
+            self.min_node.right.left = node
+            self.min_node.right = node
+            if node.key < self.min_node.key:
+                self.min_node = node
+
+    def extract_min(self):
+        # Функция экстракции минимального элемента
+        pass
+
+    def decrease_key(self, node, new_value):
+        # Функционал уменьшения ключа
+        pass
+
+    def delete(self, node):
+        # Возможность удалить узел
+        pass
 
 
 

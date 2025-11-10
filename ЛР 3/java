@@ -62,5 +62,24 @@ public class BinomialHeap {
 
 
 4) ХЭШ-ТАБЛИЦА
+import java.util.HashMap;
+import java.util.Scanner;
 
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        HashMap<String, Integer> hashTable = new HashMap<>();
+        hashTable.put("apple", 1);
+        hashTable.put("banana", 2);
+        hashTable.put("orange", 3);
+
+        System.out.print("Введите название фрукта: ");
+        String fruit = scanner.nextLine();
+        if (hashTable.containsKey(fruit)) {
+            System.out.println("Количество " + fruit + ": " + hashTable.get(fruit));
+        } else {
+            System.out.println("Такой фрукт не найден.");
+        }
+    }
+}
 

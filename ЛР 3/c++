@@ -64,5 +64,26 @@ int main() {
 
 
 4) ХЭШ-ТАБЛИЦА
+#include <iostream>
+#include <unordered_map>
 
+int main() {
+    std::unordered_map<std::string, int> hashTable;
+    hashTable["apple"] = 1;
+    hashTable["banana"] = 2;
+    hashTable["orange"] = 3;
+
+    std::string fruit;
+    std::cout << "Введите название фрукта: ";
+    std::cin >> fruit;
+
+    auto it = hashTable.find(fruit);
+    if (it != hashTable.end()) {
+        std::cout << "Количество " << fruit << ": " << it->second << std::endl;
+    } else {
+        std::cout << "Такой фрукт не найден." << std::endl;
+    }
+
+    return 0;
+}
 

@@ -1,5 +1,24 @@
 1) БИНАРНАЯ КУЧА
+#include <iostream>
+#include <queue>
 
+int main() {
+    std::priority_queue<int, std::vector<int>, std::greater<int>> minHeap; // Min-heap with custom comparator
+    int data[] = {10, 5, 8, 15};
+    const int N = sizeof(data) / sizeof(data[0]);
+    
+    for (int i = 0; i < N; ++i) {
+        minHeap.push(data[i]); // Inserting all elements
+    }
+    
+    // Popping out the elements of the heap
+    while (!minHeap.empty()) {
+        std::cout << minHeap.top() << ' ';
+        minHeap.pop();
+    }
+    
+    return 0;
+}
 
 
 

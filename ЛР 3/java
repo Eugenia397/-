@@ -20,7 +20,39 @@ public class BinaryHeapDemo {
 
 
 2) БИНОМИНАЛЬНАЯ КУЧА
+import java.util.ArrayList;
+import java.util.List;
 
+public class BinomialTree {
+    public int key;
+    public List<BinomialTree> children;
+
+    public BinomialTree(int k) {
+        key = k;
+        children = new ArrayList<>();
+    }
+}
+
+public class BinomialHeap {
+    private List<BinomialTree> trees;
+
+    public BinomialHeap() {
+        trees = new ArrayList<>();
+    }
+
+    public void insert(int key) {
+        BinomialTree newTree = new BinomialTree(key);
+        BinomialHeap tempHeap = new BinomialHeap();
+        tempHeap.trees.add(newTree);
+        merge(tempHeap);
+    }
+
+    private void merge(BinomialHeap other) {
+        List<BinomialTree> mergedTrees = new ArrayList<>(trees);
+        mergedTrees.addAll(other.trees);
+        // Необходима логика для реорганизации деревьев...
+    }
+}
 
 
 

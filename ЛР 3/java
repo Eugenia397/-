@@ -1,5 +1,21 @@
 1) БИНАРНАЯ КУЧА
+import java.util.PriorityQueue;
 
+public class BinaryHeapDemo {
+    public static void main(String[] args) {
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>(); // Min-heap by default
+        int[] numbers = {10, 5, 8, 15};
+        
+        for (int num : numbers) {
+            minHeap.offer(num); // Adding items to the heap
+        }
+        
+        // Extracting and printing minimal elements one-by-one
+        while (!minHeap.isEmpty()) {
+            System.out.print(minHeap.poll() + " ");
+        }
+    }
+}
 
 
 

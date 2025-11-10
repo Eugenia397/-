@@ -23,7 +23,38 @@ int main() {
 
 
 2) БИНОМИНАЛЬНАЯ КУЧА
+#include <iostream>
+#include <list>
 
+struct BinomialTree {
+    int key;
+    std::list<BinomialTree*> children;
+};
+
+class BinomialHeap {
+private:
+    std::list<BinomialTree*> trees;
+
+public:
+    void insert(int key) {
+        BinomialTree* newTree = new BinomialTree();
+        newTree->key = key;
+        BinomialHeap tempHeap;
+        tempHeap.trees.push_back(newTree);
+        merge(tempHeap);
+    }
+
+    void merge(BinomialHeap& other) {
+        // Логика слияния куч
+    }
+};
+
+int main() {
+    BinomialHeap heap;
+    heap.insert(10);
+    heap.insert(5);
+    return 0;
+}
 
 
 

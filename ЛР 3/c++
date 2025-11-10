@@ -59,7 +59,83 @@ int main() {
 
 
 3) КУЧА ФИБОНАЧЧИ
+#include <iostream>
+using namespace std;
 
+struct FibHeapNode {
+    int key;
+    struct FibHeapNode *parent;
+    struct FibHeapNode *child;
+    struct FibHeapNode *left;
+    struct FibHeapNode *right;
+    int degree;
+    bool mark;
+
+    FibHeapNode(int k) : key(k), parent(nullptr), child(nullptr),
+                         left(this), right(this), degree(0), mark(false) {}
+};
+
+class FibonacciHeap {
+private:
+    FibHeapNode* minNode;
+    int totalNodes;
+
+public:
+    FibonacciHeap() : minNode(nullptr), totalNodes(0) {}
+
+    void insert(int key) {
+        FibHeapNode* newNode = new FibHeapNode(key);
+        if (!minNode) {
+            minNode = newNode;
+        } else {
+            mergeWithRootList(newNode);
+            if (newNode->key < minNode->key) {
+                minNode = newNode;
+            }
+        }
+        ++totalNodes;
+    }
+
+    int extractMin() {
+        FibHeapNode* z = minNode;
+        if (z) {
+            if (z->child) {
+                addChildrenToRoot(z->child);   // детали опущены
+            }
+            removeFromRootList(z);
+            if (z == z->right) {
+                minNode = nullptr;
+            } else {
+                minNode = z->right;
+                consolidate();                 // детали опущены
+            }
+            --totalNodes;
+        }
+        return z ? z->key : INT_MAX;
+    }
+
+private:
+    void mergeWithRootList(FibHeapNode* node) {
+        node->left = minNode;
+        node->right = minNode->right;
+        minNode->right->left = node;
+        minNode->right = node;
+    }
+
+    void removeFromRootList(FibHeapNode* x) {
+        x->left->right = x->right;
+        x->right->left = x->left;
+    }
+
+    void consolidate() {
+        // подробная реализация опущена
+    }
+
+    void addChildrenToRoot(FibHeapNode* firstChild) {
+        // подробности опущены
+    }
+};
+    
 
 
 

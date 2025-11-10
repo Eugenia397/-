@@ -57,6 +57,67 @@ public class BinomialHeap {
 
 
 3) КУЧА ФИБОНАЧЧИ
+    public class FibonacciHeapNode {
+    public int key;
+    public FibonacciHeapNode parent, child, left, right;
+    public boolean marked;
+    public int degree;
+
+    public FibonacciHeapNode(int key) {
+        this.key = key;
+    }
+}
+
+public class FibonacciHeap {
+    private FibonacciHeapNode minNode;
+    private int size;
+
+    public FibonacciHeap() {
+        this.minNode = null;
+        this.size = 0;
+    }
+
+    public void insert(int key) {
+        FibonacciHeapNode node = new FibonacciHeapNode(key);
+        if (minNode == null) {
+            minNode = node;
+        } else {
+            addToRootList(node);
+            if (node.key < minNode.key) {
+                minNode = node;
+            }
+        }
+        size++;
+    }
+
+    private void addToRootList(FibonacciHeapNode node) {
+        if (minNode == null) {
+            node.left = node.right = node;
+            minNode = node;
+        } else {
+            node.right = minNode.right;
+            node.left = minNode;
+            minNode.right.left = node;
+            minNode.right = node;
+            if (node.key < minNode.key) {
+                minNode = node;
+            }
+        }
+    }
+
+    public FibonacciHeapNode extractMin() {
+        // Логика экстракции минимального элемента
+        return null;
+    }
+
+    public void decreaseKey(FibonacciHeapNode node, int newValue) {
+        // Логика уменьшения ключа
+    }
+
+    public void delete(FibonacciHeapNode node) {
+        // Логика удаления узла
+    }
+}
 
 
 

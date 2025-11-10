@@ -18,7 +18,43 @@ if __name__ == "__main__":
 
 
 2) БИНОМИНАЛЬНАЯ КУЧА
+class BinomialTree:
+    def __init__(self, key):
+        self.key = key
+        self.children = []
 
+class BinomialHeap:
+    def __init__(self):
+        self.trees = []
+
+    def insert(self, key):
+        new_tree = BinomialTree(key)
+        new_heap = BinomialHeap()
+        new_heap.trees.append(new_tree)
+        self.merge(new_heap)
+
+    def merge(self, other):
+        result_trees = []
+        carry = None
+        i = j = 0
+        while i < len(self.trees) or j < len(other.trees) or carry:
+            t1 = self.trees[i].children if i < len(self.trees) else None
+            t2 = other.trees[j].children if j < len(other.trees) else None
+            
+            if t1 and t2:
+                if t1[0].key <= t2[0].key:
+                    result_trees.append(t1.pop())
+                else:
+                    result_trees.append(t2.pop())
+            elif t1:
+                result_trees.append(t1.pop())
+            elif t2:
+                result_trees.append(t2.pop())
+                
+            i += 1
+            j += 1
+        
+        self.trees = result_trees
 
 
 

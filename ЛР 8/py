@@ -1,0 +1,59 @@
+import itertools
+
+def greedy_algorithm(n_machines, durations):
+    """
+    Жадный алгоритм распределения работ на машины.
+    """
+    loads = [0] * n_machines  # Суммарная загрузка каждой машины
+    assignments = []          # Назначения работ машинам
+
+    for job_duration in durations:
+        min_machine = loads.index(min(loads))  # Выбираем наименее загруженную машину
+        loads[min_machine] += job_duration     # Добавляем длительность работы
+        assignments.append((job_duration, min_machine))
+
+    makespan = max(loads)                      # Максимальное время завершения
+    return assignments, makespan
+
+def brute_force_optimal_solution(n_machines, durations):
+    """
+    Поиск оптимального решения полным перебором всех вариантов.
+    Подходит только для маленького числа работ.
+    """
+    min_makespan = float('inf')                 # Минимальное найденное time span
+    best_assignments = None                     # Лучшие назначения
+
+    # Генерируем все возможные способы назначения работ машинам
+    possible_assignments = itertools.product(range(n_machines), repeat=len(durations))
+
+    for assignment in possible_assignments:
+        load_by_machine = [0] * n_machines      # Загрузка каждой машины
+        for job_idx, machine in enumerate(assignment):
+            load_by_machine[machine] += durations[job_idx]
+        makespan = max(load_by_machine)         # Time span для текущего варианта
+        if makespan < min_makespan:
+            min_makespan = makespan
+            best_assignments = [(durations[i], m) for i, m in enumerate(assignment)]
+
+    return best_assignments, min_makespan
+
+# Тестирование алгоритмов
+if __name__ == '__main__':
+    # Параметры задачи
+    n_machines = 3
+    durations = [10, 20, 30, 40, 50]
+
+    # Жадный алгоритм
+    greedy_result = greedy_algorithm(n_machines, durations)
+    print("Жадный алгоритм:")
+    print("Назначение работ:", greedy_result[0])
+    print("Максимальное время завершения (makespan):", greedy_result[1])
+
+    # Оптимальное решение (полный перебор)
+    if len(durations) <= 6:  # Ограничение для полного перебора
+        optimal_result = brute_force_optimal_solution(n_machines, durations)
+        print("\nОптимальное решение:")
+        print("Назначение работ:", optimal_result[0])
+        print("Минимальное время завершения (makespan):", optimal_result[1])
+    else:
+        print("\nКоличество работ слишком велико для полного перебора.")
